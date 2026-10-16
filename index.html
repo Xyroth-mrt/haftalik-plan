@@ -143,6 +143,7 @@ section.block { margin-top: 28px; display: grid; gap: 10px; }
 .drop input { position: absolute; width: 1px; height: 1px; opacity: 0; }
 .drop:focus-within { outline: 2px solid var(--plate); outline-offset: 2px; }
 textarea { width: 100%; min-height: 160px; border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; background: var(--surface); font-size: .9rem; resize: vertical; }
+.tpl a { color: var(--plate); font-weight: 600; }
 .or { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 10px; color: var(--muted); font-size: .8rem; text-transform: uppercase; letter-spacing: .1em; }
 .or::before, .or::after { content: ""; height: 1px; background: var(--line); }
 .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
@@ -233,7 +234,8 @@ const STR = {
     app: "Haftalık Plan", train: "Antrenman", macro: "Makro", plan: "Plan", today: "BUGÜN",
     uploadTitle: "Planını yükle",
     uploadLead: "Haftalık antrenman programının PDF’ini seç. Dosya hiçbir yere gönderilmez; her şey bu cihazda okunur.",
-    pickPdf: "PDF seç", pickHint: "Haftalık program içeren bir PDF", reading: "PDF okunuyor…", or: "veya",
+    pickPdf: "PDF seç", pickHint: "Haftalık program içeren bir PDF",
+    tplLead: "PDF’in iyi okunmadı mı? Programını bu şablondaki düzende yaz:", tplPdf: "Şablon PDF", tplTxt: "Metin şablonu", reading: "PDF okunuyor…", or: "veya",
     pasteText: "Metni yapıştır", pastePh: "Programın metnini buraya yapıştır. Örnek:\nPazartesi - Göğüs\nBench Press 4x8-10 2 dk\nIncline Dumbbell Press 3x10-12 90 sn",
     readText: "Metni oku", emptyPlan: "Boş planla başla", sample: "Örnek planı dene",
     parsed: (d, e) => `${d} gün ve ${e} hareket okundu. Aşağıdan kontrol et; yanlış okunanı düzelt, eksik olanı ekle.`,
@@ -267,7 +269,8 @@ const STR = {
     app: "Weekly Plan", train: "Workout", macro: "Macros", plan: "Plan", today: "TODAY",
     uploadTitle: "Upload your plan",
     uploadLead: "Pick the PDF of your weekly workout program. The file is never sent anywhere; it is read on this device.",
-    pickPdf: "Choose PDF", pickHint: "A PDF with a weekly program", reading: "Reading PDF…", or: "or",
+    pickPdf: "Choose PDF", pickHint: "A PDF with a weekly program",
+    tplLead: "PDF not read well? Write your program in the layout of this template (Turkish):", tplPdf: "Template PDF", tplTxt: "Text template", reading: "Reading PDF…", or: "or",
     pasteText: "Paste text", pastePh: "Paste your program's text here. Example:\nMonday - Chest\nBench Press 4x8-10 2 min\nIncline Dumbbell Press 3x10-12 90 sec",
     readText: "Read text", emptyPlan: "Start with an empty plan", sample: "Try a sample plan",
     parsed: (d, e) => `Read ${d} days and ${e} exercises. Check them below, fix anything misread and add what is missing.`,
@@ -575,6 +578,7 @@ function importHtml(first) {
   return `<div class="hero">
     ${first ? `<h2>${esc(t("uploadTitle"))}</h2><p>${esc(t("uploadLead"))}</p>` : `<h3>${esc(t("newPlan"))}</h3><p class="muted small">${esc(t("newPlanLead"))}</p>`}
     <label class="drop"><input type="file" id="pdfIn" accept="application/pdf,.pdf" ${ui.busy ? "disabled" : ""}><b>${esc(ui.busy ? t("reading") : t("pickPdf"))}</b><span class="muted small">${esc(t("pickHint"))}</span></label>
+    <div class="tpl small"><span class="muted">${esc(t("tplLead"))}</span> <a href="sablon.pdf" target="_blank" rel="noopener">${esc(t("tplPdf"))}</a> · <a href="sablon.txt" target="_blank" rel="noopener">${esc(t("tplTxt"))}</a></div>
     <div class="or">${esc(t("or"))}</div>
     ${ui.paste
       ? `<textarea id="pasteBox" placeholder="${esc(t("pastePh"))}"></textarea><div class="row"><button class="btn primary" type="button" data-act="pasteGo">${esc(t("readText"))}</button><button class="btn ghost" type="button" data-act="pasteToggle">${esc(t("cancel"))}</button></div>`

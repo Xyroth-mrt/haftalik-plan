@@ -1,5 +1,5 @@
 // Network first, cache as offline fallback (so the app opens at the gym without signal).
-const CACHE = "haftalik-plan-v1";
+const CACHE = "haftalik-plan-v2";
 self.addEventListener("install", e => {
   self.skipWaiting();
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(["./", "./manifest.webmanifest", "./apple-touch-icon.png"])));
